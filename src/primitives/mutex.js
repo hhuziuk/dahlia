@@ -1,9 +1,11 @@
-const { threadId } = require('worker_threads');
+const { threadId, isMainThread } = require('node:worker_threads');
 
 class Mutex {
     constructor(sharedBuffer) {
         this.data = new Int32Array(sharedBuffer);
-        Atomics.store(this.data, 0, 0);
+        if (isMainThread) {
+            Atomics.store(this.data, 0, 0);
+        }
         this.ownerThreadId = null;
         // 1 - is locked
         // 0 - is unlocked
