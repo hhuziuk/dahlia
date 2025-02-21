@@ -1,23 +1,24 @@
-const { isMainThread } = require("node:worker_threads");
-
 class BinarySemaphore {
   constructor(sharedBuffer) {
     this.data = new Int32Array(sharedBuffer);
-    if (isMainThread) {
-      Atomics.store(this.data, 0, 1);
-    }
-    // 0 - is busy
+    Atomics.store(this.data, 0, 1);
     // 1 - is free
+    // 0 - is busy
   }
 
-  wait() {
-    while (true) {
-      if (Atomics.compareExchange(this.data, 0, 1, 0) === 1) return;
-      Atomics.wait(this.data, 0, 0);
+  acquire() {
+    while (Atomics.compareExchange(this.data, 0, 1, 0) !== 1) {
+      Atomics.wait(this.data, 0,0)
     }
   }
 
-  signal() {
+  async asyncAcquire() {
+    while (Atomics.compareExchange(this.data, 0, 1, 0) !== 1) {
+      await Atomics.waitAsync(this.data, 0,0).value
+    }
+  }
+
+  release() {
     Atomics.store(this.data, 0, 1);
     Atomics.notify(this.data, 0, 1);
   }

@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node --test test/primitives/*.test.js",
+    "test": "node --test test/**/**.test.js",
     "lint": "npx biome format . --write"
   },
   "author": "",

@@ -23,11 +23,7 @@ class Mutex {
 
   async asyncLock() {
     while (Atomics.compareExchange(this.data, 0, 0, 1) !== 0) {
-      if (typeof Atomics.waitAsync === "function") {
-        await Atomics.waitAsync(this.data, 0, 1).value;
-      } else {
-        Atomics.wait(this.data, 0, 1);
-      }
+      await Atomics.waitAsync(this.data, 0, 1).value;
     }
     this.ownerThreadId = threadId;
   }
@@ -42,7 +38,7 @@ class Mutex {
       throw new Error("unlock: Mutex is already unlocked.");
     }
     Atomics.store(this.data, 0, 0);
-    Atomics.notify(this.data, 0);
+    Atomics.notify(this.data, 0, 1); // count is equal 1 because we free only one thread
     this.ownerThreadId = null;
   }
 }

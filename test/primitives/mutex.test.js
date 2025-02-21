@@ -7,7 +7,7 @@ test("mutex test with worker_threads", async (t) => {
   const NUMBER_OF_THREADS = 10;
   const ITERATIONS = 1_000_000;
 
-  await t.test("sync lock test", async (t) => {
+  await t.test("mutex sync lock test", async (t) => {
     if (isMainThread) {
       const mutexBuffer = new SharedArrayBuffer(4);
       const counterBuffer = new SharedArrayBuffer(4);
