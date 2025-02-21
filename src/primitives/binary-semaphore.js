@@ -8,13 +8,13 @@ class BinarySemaphore {
 
   acquire() {
     while (Atomics.compareExchange(this.data, 0, 1, 0) !== 1) {
-      Atomics.wait(this.data, 0,0)
+      Atomics.wait(this.data, 0, 0);
     }
   }
 
   async asyncAcquire() {
     while (Atomics.compareExchange(this.data, 0, 1, 0) !== 1) {
-      await Atomics.waitAsync(this.data, 0,0).value
+      await Atomics.waitAsync(this.data, 0, 0).value;
     }
   }
 
