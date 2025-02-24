@@ -32,4 +32,4 @@ class CountingSemaphore {
   }
 }
 
-module.exports = CountingSemaphore;
+module.exports = { CountingSemaphore };

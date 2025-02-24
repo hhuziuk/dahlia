@@ -5,7 +5,7 @@
 
 ### Semaphore: 
 * binarySemaphore ☑️/ ☑️
-* counterSemaphore ☑️/ 
+* countingSemaphore ☑️/ 
 
 ### Barrier:
 * barrier
@@ -20,4 +20,4 @@
 * concurrentSet
 
 ### Parallel functions:
-* parallelPipeline
+* parallelPipeline ☑️/ ☑️
