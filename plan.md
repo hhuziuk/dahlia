@@ -1,11 +1,11 @@
 ### Mutex: 
-* sync/async mutex ☑️
+* sync/async mutex ☑️/ ☑️
 * queuingMutex
 * recursiveMutex
 
 ### Semaphore: 
-* binarySemaphore
-* counterSemaphore
+* binarySemaphore ☑️/ ☑️
+* counterSemaphore ☑️/ 
 
 ### Barrier:
 * barrier
@@ -19,3 +19,5 @@
 * concurrentMap
 * concurrentSet
 
+### Parallel functions:
+* parallelPipeline
