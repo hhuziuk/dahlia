@@ -12,12 +12,6 @@ class BinarySemaphore {
     }
   }
 
-  async asyncAcquire() {
-    while (Atomics.compareExchange(this.data, 0, 1, 0) !== 1) {
-      await Atomics.waitAsync(this.data, 0, 0).value;
-    }
-  }
-
   release() {
     Atomics.store(this.data, 0, 1);
     Atomics.notify(this.data, 0, 1);

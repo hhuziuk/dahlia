@@ -30,23 +30,6 @@ class CountingSemaphore {
     Atomics.add(this.counter, 0, 1);
     Atomics.notify(this.counter, 0, 1);
   }
-
-  async asyncAcquire() {
-    while (true) {
-      let current = Atomics.load(this.counter, 0);
-      if (current > 0) {
-        const previous = current - 1;
-        if (
-          Atomics.compareExchange(this.counter, 0, current, previous) ===
-          current
-        ) {
-          return;
-        }
-      } else {
-        await Atomics.waitAsync(this.counter, 0, 0).value;
-      }
-    }
-  }
 }
 
 module.exports = CountingSemaphore;

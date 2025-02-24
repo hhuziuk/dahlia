@@ -21,13 +21,6 @@ class Mutex {
     this.ownerThreadId = threadId;
   }
 
-  async asyncLock() {
-    while (Atomics.compareExchange(this.data, 0, 0, 1) !== 0) {
-      await Atomics.waitAsync(this.data, 0, 1).value;
-    }
-    this.ownerThreadId = threadId;
-  }
-
   unlock() {
     if (this.ownerThreadId !== threadId) {
       throw new Error(
