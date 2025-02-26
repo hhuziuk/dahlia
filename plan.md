@@ -1,16 +1,18 @@
-### Mutex: 
-* sync/async mutex ☑️/ ☑️
+### Mutexes: 
+* sync mutex ☑️/ ☑️
 * queuingMutex
 * recursiveMutex
+* threadPool
 
-### Semaphore: 
+### Semaphores: 
 * binarySemaphore ☑️/ ☑️
-* countingSemaphore ☑️/ 
+* countingSemaphore ☑️/ ☑️
 
-### Barrier:
+### Barriers:
 * barrier
 
-### Futures:
+### Primitives:
+* thread pool
 * future
 
 ### Data structures:
@@ -19,5 +21,5 @@
 * concurrentMap
 * concurrentSet
 
-### Parallel functions:
+### Computation Models:
 * parallelPipeline ☑️/ ☑️
