@@ -1,19 +1,18 @@
 ### Mutexes: 
-* sync mutex ☑️/ ☑️
-* queuingMutex
-* recursiveMutex
-* threadPool
+* sync mutex ☑️/ ☑️ / ☑️
 
 ### Semaphores: 
-* binarySemaphore ☑️/ ☑️
-* countingSemaphore ☑️/ ☑️
+* binarySemaphore ☑️/ ☑️ / ☑️
+* countingSemaphore ☑️/ ☑️ / ☑️
+
+### Locks:
+* rwLock 
 
 ### Barriers:
 * barrier
 
 ### Primitives:
-* thread pool
-* future
+* thread pool ☑️/ ☑️ / ☑️
 
 ### Data structures:
 * concurrentQueue
@@ -22,4 +21,5 @@
 * concurrentSet
 
 ### Computation Models:
-* parallelPipeline ☑️/ ☑️
+* parallelPipeline ☑️/ ☑️ / ☑️
+* parallelQuickSort ☑️/ ☑️ /

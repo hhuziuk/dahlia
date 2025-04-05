@@ -1,6 +1,8 @@
+"use strict";
+
 const { MessageChannel } = require("node:worker_threads");
 
-const createParallelPipeline = async (workers, transferData) => {
+function createParallelPipeline(workers, transferData) {
   if (!Array.isArray(workers)) {
     throw new Error("workers is not an array!");
   }
@@ -18,6 +20,6 @@ const createParallelPipeline = async (workers, transferData) => {
   workers[0].postMessage({ data: transferData });
 
   return workers;
-};
+}
 
-module.exports = createParallelPipeline;
+module.exports = { createParallelPipeline };
