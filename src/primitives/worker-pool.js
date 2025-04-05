@@ -38,7 +38,7 @@ class WorkerPool {
       this.#dispatchNextTask();
     };
 
-    worker.on('message', (data) => {
+    worker.on("message", (data) => {
       const { callbackId, result, error } = data;
 
       if (worker.currentCallback === callbackId) {
@@ -49,17 +49,21 @@ class WorkerPool {
       }
     });
 
-    worker.on('error', (errorEvent) => {
+    worker.on("error", (errorEvent) => {
       if (worker.currentCallback !== undefined) {
-        worker.currentReject(new Error(`Worker error: ${errorEvent.message || errorEvent}`));
+        worker.currentReject(
+          new Error(`Worker error: ${errorEvent.message || errorEvent}`),
+        );
         clearTask();
       }
     });
 
-    worker.on('exit', (code) => {
+    worker.on("exit", (code) => {
       if (code !== 0) {
         if (worker.currentCallback !== undefined) {
-          worker.currentReject(new Error(`Worker stopped with exit code ${code}`));
+          worker.currentReject(
+            new Error(`Worker stopped with exit code ${code}`),
+          );
         }
       }
       this.workerPool.delete(worker);
@@ -74,7 +78,9 @@ class WorkerPool {
       return;
     }
 
-    const worker = [...this.workerPool].find(w => w.currentCallback === undefined);
+    const worker = [...this.workerPool].find(
+      (w) => w.currentCallback === undefined,
+    );
     if (!worker) {
       return;
     }

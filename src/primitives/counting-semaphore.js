@@ -14,7 +14,10 @@ class CountingSemaphore {
       let current = Atomics.load(this.counter, 0);
       if (current > 0) {
         const previous = current - 1;
-        if (Atomics.compareExchange(this.counter, 0, current, previous) === current) {
+        if (
+          Atomics.compareExchange(this.counter, 0, current, previous) ===
+          current
+        ) {
           return;
         }
       } else {
