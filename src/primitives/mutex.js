@@ -34,6 +34,19 @@ class Mutex {
     Atomics.notify(this.data, 0, 1); // count is equal 1 because we free only one thread
     this.ownerThreadId = null;
   }
+
+  acquire() {
+    return new Promise((resolve) => {
+      const tryLock = () => {
+        if (Atomics.compareExchange(this.data, 0, 0, 1) === 0) {
+          this.ownerThreadId = threadId;
+          return resolve();
+        }
+        setImmediate(tryLock);
+      };
+      tryLock();
+    });
+  }
 }
 
 module.exports = { Mutex };

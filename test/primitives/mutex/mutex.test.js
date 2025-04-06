@@ -14,7 +14,7 @@ describe("mutex test with worker_threads", function () {
 
     const workers = Array.from({ length: 10 }, () => {
       return new Promise((resolve) => {
-        const worker = new Worker("./test/primitives/worker.js", {
+        const worker = new Worker("./test/primitives/mutex/worker.js", {
           workerData: { mutexBuffer, counterBuffer },
         });
         worker.on("exit", resolve);
