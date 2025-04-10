@@ -1,5 +1,5 @@
 {
-  "name": "caesar",
+  "name": "dahlia",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,12 +8,15 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node --test test/**/**.test.js",
+    "test": "mocha --recursive --reporter spec \"test/**/*.test.js\" --exit",
     "lint": "npx biome format . --write"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@biomejs/biome": "1.9.4"
+    "@biomejs/biome": "1.9.4",
+    "mocha": "^11.1.0",
+    "chai": "^5.2.0",
+    "sinon": "^20.0.0"
   }
 }

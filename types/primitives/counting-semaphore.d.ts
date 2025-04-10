@@ -4,5 +4,6 @@ export class CountingSemaphore {
   constructor(sharedBuffer: SharedArrayBuffer, threads?: number);
 
   acquire(): void;
+
   release(): void;
 }

@@ -1,11 +1,15 @@
-class ThreadPool {
-  constructor(workerNumber = 1, workerPath) {
+const { Worker } = require("node:worker_threads");
+
+class WorkerPool {
+  constructor(workerNumber = 1, workerPath, workerData = {}) {
     this.workerNumber = workerNumber;
     this.workerPath = workerPath;
     this.workerPool = new Set();
     this.callbackIdCounter = 0;
+    this.pendingTasks = 0;
     this.callbackQueue = [];
     this.stopped = false;
+    this.workerData = workerData;
     this.#initializeWorkers();
   }
 
@@ -16,56 +20,85 @@ class ThreadPool {
   }
 
   #createWorker() {
-    const worker = new Worker(this.workerPath);
+    const worker = new Worker(this.workerPath, { workerData: this.workerData });
+    worker.currentCallback = undefined;
+    worker.currentResolve = undefined;
+    worker.currentReject = undefined;
+
     this.workerPool.add(worker);
 
     const clearTask = () => {
+      // Декрементуємо завдання, якщо було прив'язане завдання
+      if (worker.currentCallback !== undefined) {
+        this.pendingTasks--;
+      }
       delete worker.currentCallback;
       delete worker.currentResolve;
       delete worker.currentReject;
+      this.#dispatchNextTask();
     };
 
-    worker.onmessage = ({ data }) => {
+    worker.on("message", (data) => {
       const { callbackId, result, error } = data;
 
       if (worker.currentCallback === callbackId) {
         error ? worker.currentReject(error) : worker.currentResolve(result);
         clearTask();
+      } else {
+        this.#dispatchNextTask();
       }
-      this.#addTask(worker);
-    };
+    });
 
-    worker.onerror = (errorEvent) => {
+    worker.on("error", (errorEvent) => {
       if (worker.currentCallback !== undefined) {
-        worker.currentReject(errorEvent.message);
+        worker.currentReject(
+          new Error(`Worker error: ${errorEvent.message || errorEvent}`),
+        );
         clearTask();
       }
-      this.#addTask(worker);
-    };
+    });
 
-    this.#addTask(worker);
+    worker.on("exit", (code) => {
+      if (code !== 0) {
+        if (worker.currentCallback !== undefined) {
+          worker.currentReject(
+            new Error(`Worker stopped with exit code ${code}`),
+          );
+        }
+      }
+      this.workerPool.delete(worker);
+      this.#dispatchNextTask();
+    });
+
+    this.#dispatchNextTask();
   }
 
-  #addTask(worker) {
-    if (worker.currentCallback !== undefined) return; // worker is busy
-    if (this.callbackQueue.length === 0) return;
-    if (this.stopped) return;
+  #dispatchNextTask() {
+    if (this.stopped || this.callbackQueue.length === 0) {
+      return;
+    }
+
+    const worker = [...this.workerPool].find(
+      (w) => w.currentCallback === undefined,
+    );
+    if (!worker) {
+      return;
+    }
 
     const callback = this.callbackQueue.shift();
     worker.currentCallback = callback.callbackId;
     worker.currentResolve = callback.resolve;
     worker.currentReject = callback.reject;
+
     worker.postMessage({ id: callback.callbackId, data: callback.data });
+    this.pendingTasks++;
   }
 
   submit(data) {
     return new Promise((resolve, reject) => {
       const callbackId = this.callbackIdCounter++;
       this.callbackQueue.push({ callbackId, data, resolve, reject });
-
-      for (const worker of this.workerPool) {
-        this.#addTask(worker);
-      }
+      this.#dispatchNextTask();
     });
   }
 
@@ -77,29 +110,30 @@ class ThreadPool {
     if (!this.stopped) return;
     this.stopped = false;
     for (const worker of this.workerPool) {
-      this.#addTask(worker);
+      this.#dispatchNextTask();
     }
   }
 
   wait() {
     return new Promise((resolve) => {
-      const checkArray = setInterval(() => {
-        const allWorkersAreFree = [...this.workerPool].every(
-          (worker) => worker.currentCallback === undefined,
-        );
-        const isEmpty = this.callbackQueue.length === 0;
-        if (isEmpty && allWorkersAreFree) {
-          clearInterval(checkArray);
+      const checkInterval = setInterval(() => {
+        if (this.pendingTasks === 0) {
+          clearInterval(checkInterval);
           resolve();
         }
       }, 10);
     });
   }
 
-  terminate() {
+  async terminate() {
+    this.stopped = true;
     for (const worker of this.workerPool) {
-      worker.terminate();
+      await worker.terminate();
     }
     this.workerPool.clear();
+
+    return this.workerPool.size;
   }
 }
+
+module.exports = { WorkerPool };

@@ -6,9 +6,9 @@ class BinarySemaphore {
     // 0 - is busy
   }
 
-  acquire() {
+  async acquire() {
     while (Atomics.compareExchange(this.data, 0, 1, 0) !== 1) {
-      Atomics.wait(this.data, 0, 0);
+      await new Promise((resolve) => setImmediate(resolve));
     }
   }
 

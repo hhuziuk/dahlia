@@ -14,9 +14,13 @@ class Mutex {
     // 0 - is unlocked
   }
 
-  lock() {
+  lock(timeout = 5000) {
+    const start = Date.now();
     while (Atomics.compareExchange(this.data, 0, 0, 1) !== 0) {
-      Atomics.wait(this.data, 0, 1);
+      const waited = Atomics.wait(this.data, 0, 1, timeout);
+      if (Date.now() - start >= timeout || waited === 'timed-out') {
+        throw new Error("Mutex lock timeout");
+      }
     }
     this.ownerThreadId = threadId;
   }
@@ -33,6 +37,16 @@ class Mutex {
     Atomics.store(this.data, 0, 0);
     Atomics.notify(this.data, 0, 1); // count is equal 1 because we free only one thread
     this.ownerThreadId = null;
+  }
+
+  acquire() {
+    return new Promise((resolve) => {
+      while (Atomics.compareExchange(this.data, 0, 0, 1) !== 0) {
+        Atomics.wait(this.data, 0, 1);
+      }
+      this.ownerThreadId = threadId;
+      resolve();
+    });
   }
 }
 

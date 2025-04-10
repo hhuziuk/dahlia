@@ -3,7 +3,11 @@
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["types/methods/pipeline.d.ts"]
+    "ignore": [
+      "types/methods/pipeline.d.ts",
+      "test/methods/test-arrays/test-array-1000000-sorted.js",
+      "test/methods/test-arrays/test-array-1000000.js"
+    ]
   },
   "formatter": {
     "enabled": true,
