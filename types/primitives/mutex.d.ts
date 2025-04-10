@@ -4,6 +4,9 @@ export class Mutex {
 
   constructor(sharedBuffer: SharedArrayBuffer);
 
-  lock(): void;
+  lock(timeout?: number): void;
+
   unlock(): void;
+
+  acquire(): Promise<void>;
 }

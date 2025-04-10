@@ -1,6 +1,8 @@
 const { describe, it } = require("mocha");
 const { strictEqual } = require("node:assert");
-const { BinarySemaphore } = require("../../src/primitives/binary-semaphore.js");
+const {
+  BinarySemaphore,
+} = require("../../../src/primitives/binary-semaphore.js");
 
 describe("Binary Semaphore Concurrency and Synchronization Test", async (outerT) => {
   const ITERATIONS = 100_000;
@@ -26,9 +28,9 @@ describe("Binary Semaphore Concurrency and Synchronization Test", async (outerT)
     await Promise.all(tasks);
 
     strictEqual(
-        counter,
-        10 * ITERATIONS,
-        `Expected ${10 * ITERATIONS}, but got ${counter}`
+      counter,
+      10 * ITERATIONS,
+      `Expected ${10 * ITERATIONS}, but got ${counter}`,
     );
   });
 });

@@ -18,64 +18,60 @@ class RwLock {
     }
   }
 
-  READ_LOCKS = {
-    greedy: () => {
-      this.readMutex.lock();
-      this.reader++;
-      if (this.reader === 1) {
-        this.writeMutex.lock();
-      }
-      this.readMutex.unlock();
-    },
-
-    fair: () => {
-      this.readerGate.lock();
-      this.readMutex.lock();
-      this.reader++;
-      if (this.reader === 1) {
-        this.writeMutex.lock();
-      }
-      this.readMutex.unlock();
-      this.readerGate.unlock();
-    },
-  };
-
-  WRITE_LOCKS = {
-    greedy: () => {
-      this.readMutex.lock();
-      if (this.reader > 0) {
-        this.readMutex.unlock();
-        throw new Error("Cannot acquire write lock while read lock is active");
-      }
-      this.readMutex.unlock();
-
+  readLockGreedy() {
+    this.readMutex.lock();
+    this.reader++;
+    if (this.reader === 1) {
       this.writeMutex.lock();
-      this.writer = true;
-    },
-
-    fair: () => {
-      this.readMutex.lock();
-      if (this.reader > 0) {
-        this.readMutex.unlock();
-        throw new Error("Cannot acquire write lock while read lock is active");
-      }
-      this.readMutex.unlock();
-
-      this.waitingWriters++;
-
-      this.readerGate.lock();
-      this.writeMutex.lock();
-      this.writer = true;
-      this.waitingWriters--;
-    },
-  };
-
-  get readLock() {
-    return this.politics ? this.READ_LOCKS.fair : this.READ_LOCKS.greedy;
+    }
+    this.readMutex.unlock();
   }
 
-  get writeLock() {
-    return this.politics ? this.WRITE_LOCKS.fair : this.WRITE_LOCKS.greedy;
+  readLockFair() {
+    this.readerGate.lock();
+    this.readMutex.lock();
+    this.reader++;
+    if (this.reader === 1) {
+      this.writeMutex.lock();
+    }
+    this.readMutex.unlock();
+    this.readerGate.unlock();
+  }
+
+  writeLockGreedy() {
+    this.readMutex.lock();
+    if (this.reader > 0) {
+      this.readMutex.unlock();
+      throw new Error("Cannot acquire write lock while read lock is active");
+    }
+    this.readMutex.unlock();
+
+    this.writeMutex.lock();
+    this.writer = true;
+  }
+
+  writeLockFair() {
+    this.readMutex.lock();
+    if (this.reader > 0) {
+      this.readMutex.unlock();
+      throw new Error("Cannot acquire write lock while read lock is active");
+    }
+    this.readMutex.unlock();
+
+    this.waitingWriters++;
+
+    this.readerGate.lock();
+    this.writeMutex.lock();
+    this.writer = true;
+    this.waitingWriters--;
+  }
+
+  readLock() {
+    return this.politics ? this.readLockFair() : this.readLockGreedy();
+  }
+
+  writeLock() {
+    return this.politics ? this.writeLockFair() : this.writeLockGreedy();
   }
 
   readUnlock() {

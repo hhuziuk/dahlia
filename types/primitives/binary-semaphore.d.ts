@@ -3,6 +3,7 @@ export class BinarySemaphore {
 
   constructor(sharedBuffer: SharedArrayBuffer);
 
-  acquire(): void;
+  acquire(): Promise<void>;
+
   release(): void;
 }

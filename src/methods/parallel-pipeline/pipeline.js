@@ -1,5 +1,3 @@
-"use strict";
-
 const { MessageChannel } = require("node:worker_threads");
 
 function createParallelPipeline(workers, transferData) {

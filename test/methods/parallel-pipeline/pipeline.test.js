@@ -1,42 +1,105 @@
-const { describe, it } = require("mocha");
-const { strictEqual } = require("node:assert");
-const { Worker } = require("node:worker_threads");
-const { resolve } = require("node:path");
-const { createParallelPipeline } = require("../../src/methods/parallel-pipeline/pipeline.js");
+const { expect } = require("chai");
+const { MessageChannel, MessagePort } = require("node:worker_threads");
+const {
+  createParallelPipeline,
+} = require("../../../src/methods/parallel-pipeline/pipeline.js");
 
-const workerPath = resolve(__dirname, "pipeline-worker.js");
+class MockWorker {
+  constructor() {
+    this.messages = [];
+  }
 
-describe("async parallel pipeline", function () {
-  it("should process data in a simple parallel pipeline", function (done) {
-    this.timeout(5000);
+  postMessage(message, transferList) {
+    this.messages.push({ message, transferList });
+  }
+}
 
-    const worker1 = new Worker(workerPath);
-    const worker2 = new Worker(workerPath);
-    const worker3 = new Worker(workerPath);
-    const workers = [worker1, worker2, worker3];
-    const data = new Int32Array([1, 2, 3, 4, 5]);
+describe("createParallelPipeline", function () {
+  it("should throw an error if workers is not an array", function () {
+    expect(() => createParallelPipeline({}, "data")).to.throw(
+      "workers is not an array!",
+    );
+  });
 
-    createParallelPipeline(workers, data);
+  it("should throw an error if less than two workers are provided", function () {
+    expect(() => createParallelPipeline([new MockWorker()], "data")).to.throw(
+      "should be at least two workers!",
+    );
+  });
 
-    worker3.on("message", async (message) => {
-      if (message.result) {
-        try {
-          const finalResult = message.result;
+  it("should setup pipeline correctly for two workers", function () {
+    const worker1 = new MockWorker();
+    const worker2 = new MockWorker();
+    const transferData = "testData";
 
-          strictEqual(
-              JSON.stringify(Array.from(finalResult)),
-              JSON.stringify([4, 5, 6, 7, 8]),
-              `Expected [4, 5, 6, 7, 8], but got ${JSON.stringify(finalResult)}`,
-          );
+    const workers = createParallelPipeline([worker1, worker2], transferData);
 
-          await Promise.all(workers.map((worker) => worker.terminate()));
-          done();
-        } catch (err) {
-          done(err);
-        }
-      }
-    });
+    expect(workers).to.be.an("array").with.lengthOf(2);
 
-    worker3.on("error", (err) => done(err));
+    expect(worker1.messages).to.have.lengthOf(2);
+
+    const firstMsgW1 = worker1.messages[0].message;
+    expect(firstMsgW1).to.have.property("func", "send");
+    expect(firstMsgW1).to.have.property("port");
+    expect(firstMsgW1.port).to.satisfy(
+      (port) =>
+        port instanceof MessagePort || (port && port.onmessage !== undefined),
+    );
+
+    const secondMsgW1 = worker1.messages[1].message;
+    expect(secondMsgW1).to.deep.equal({ data: transferData });
+
+    expect(worker2.messages).to.have.lengthOf(1);
+    const firstMsgW2 = worker2.messages[0].message;
+    expect(firstMsgW2).to.have.property("func", "receive");
+    expect(firstMsgW2).to.have.property("port");
+    expect(firstMsgW2.port).to.satisfy(
+      (port) =>
+        port instanceof MessagePort || (port && port.onmessage !== undefined),
+    );
+  });
+
+  it("should setup pipeline correctly for three workers", function () {
+    const worker1 = new MockWorker();
+    const worker2 = new MockWorker();
+    const worker3 = new MockWorker();
+    const transferData = { value: 123 };
+
+    const workers = createParallelPipeline(
+      [worker1, worker2, worker3],
+      transferData,
+    );
+    expect(workers).to.be.an("array").with.lengthOf(3);
+
+    expect(worker1.messages).to.have.lengthOf(2);
+    expect(worker1.messages[0].message).to.have.property("func", "send");
+    expect(worker1.messages[0].message).to.have.property("port");
+    expect(worker1.messages[0].message.port).to.satisfy(
+      (port) =>
+        port instanceof MessagePort || (port && port.onmessage !== undefined),
+    );
+    expect(worker1.messages[1].message).to.deep.equal({ data: transferData });
+
+    expect(worker2.messages).to.have.lengthOf(2);
+    expect(worker2.messages[0].message).to.have.property("func", "receive");
+    expect(worker2.messages[0].message).to.have.property("port");
+    expect(worker2.messages[0].message.port).to.satisfy(
+      (port) =>
+        port instanceof MessagePort || (port && port.onmessage !== undefined),
+    );
+    expect(worker2.messages[1].message).to.have.property("func", "send");
+    expect(worker2.messages[1].message).to.have.property("port");
+    expect(worker2.messages[1].message.port).to.satisfy(
+      (port) =>
+        port instanceof MessagePort || (port && port.onmessage !== undefined),
+    );
+
+    expect(worker3.messages).to.have.lengthOf(1);
+    expect(worker3.messages[0].message).to.have.property("func", "receive");
+    expect(worker3.messages[0].message).to.have.property("port");
+    expect(worker3.messages[0].message.port).to.satisfy(
+      (port) =>
+        port instanceof MessagePort || (port && port.onmessage !== undefined),
+    );
   });
 });

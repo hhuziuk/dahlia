@@ -1,11 +1,10 @@
-/// <reference path="./methods/pipeline.d.ts" />
-export * from "./methods/pipeline";
+export * from "./methods/parallel-pipeline/pipeline";
+export * from "./methods/parallelQuickSort/parallel-quick-sort";
+export * from "./methods/parallelQuickSort/quick-sort-worker";
+export * from "./methods/parallelQuickSort/type-constructors";
 
-/// <reference path="./primitives/binary-semaphore.d.ts" />
-export * from "./primitives/binary-semaphore";
-
-/// <reference path="./primitives/counting-semaphore.d.ts" />
-export * from "./primitives/counting-semaphore";
-
-/// <reference path="./primitives/mutex.d.ts" />
 export * from "./primitives/mutex";
+export * from "./primitives/rw-lock";
+export * from "./primitives/worker-pool";
+export * from "./primitives/counting-semaphore";
+export * from "./primitives/binary-semaphore";

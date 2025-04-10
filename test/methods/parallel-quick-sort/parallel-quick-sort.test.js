@@ -13,14 +13,14 @@ const testArray10000Sorted = require("./test-arrays/test-array-10000-sorted.js")
 const testArray100000Sorted = require("./test-arrays/test-array-100000-sorted.js");
 const testArray1000000Sorted = require("./test-arrays/test-array-1000000-sorted.js");
 
-const parallelQuickSort = require("../../src/methods/parallel-quick-sort/parallel-quick-sort");
+const parallelQuickSort = require("../../../src/methods/parallel-quick-sort/parallel-quick-sort");
 
 function arraysAreEqual(a, b) {
   if (a.length !== b.length) return false;
   for (let i = 0; i < a.length; i++) {
     if (a[i] !== b[i]) {
       console.log(
-          `Mismatch at index ${i}: a[${i}] = ${a[i]}, b[${i}] = ${b[i]}`
+        `Mismatch at index ${i}: a[${i}] = ${a[i]}, b[${i}] = ${b[i]}`,
       );
       return false;
     }
@@ -31,15 +31,15 @@ function arraysAreEqual(a, b) {
 function testSorting(unsortedArray, expectedSortedArray, size) {
   it(`should correctly sort ${size} elements`, async () => {
     const result = await parallelQuickSort(
-        [...unsortedArray],
-        2,
-        Int32Array,
-        true
+      [...unsortedArray],
+      2,
+      Int32Array,
+      true,
     );
     strictEqual(
-        arraysAreEqual(result, expectedSortedArray),
-        true,
-        `Sorted arrays are not equal for size ${size}`
+      arraysAreEqual(result, expectedSortedArray),
+      true,
+      `Sorted arrays are not equal for size ${size}`,
     );
   });
 }
