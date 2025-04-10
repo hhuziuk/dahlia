@@ -11,9 +11,9 @@ export class RwLock {
   private readerGate?: Mutex;
 
   constructor(
-      readMutexBuffer: SharedArrayBuffer,
-      writeMutexBuffer: SharedArrayBuffer,
-      politics?: boolean // true = fair, false = greedy
+    readMutexBuffer: SharedArrayBuffer,
+    writeMutexBuffer: SharedArrayBuffer,
+    politics?: boolean, // true = fair, false = greedy
   );
 
   readLock(): void;

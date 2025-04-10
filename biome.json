@@ -5,8 +5,8 @@
     "ignoreUnknown": false,
     "ignore": [
       "types/methods/pipeline.d.ts",
-      "test/methods/test-arrays/test-array-1000000-sorted.js",
-      "test/methods/test-arrays/test-array-1000000.js"
+      "test/methods/parallel-quick-sort/test-arrays/test-array-1000000-sorted.js",
+      "test/methods/parallel-quick-sort/test-arrays/test-array-1000000.js"
     ]
   },
   "formatter": {
