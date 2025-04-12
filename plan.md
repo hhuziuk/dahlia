@@ -13,8 +13,8 @@
 * thread pool ☑️/ ☑️ / ☑️
 
 ### Data structures:
-* concurrentQueue
-* concurrentPriorityQueue
+* concurrentQueue ☑️/ ☑️ / ☑️
+* concurrentPriorityQueue ☑️/ ☑️ / ☑️
 * concurrentMap
 * concurrentSet
 

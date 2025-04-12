@@ -38,6 +38,10 @@ export interface PipelineWorkerSetupMessage {
   func: "send" | "receive";
 }
 
+export interface PipelineWorkerDataMessage<T extends SerializableData> {
+  data: T;
+}
+
 export type PipelineWorkerMessage<T extends SerializableData> =
   | PipelineWorkerSetupMessage
   | PipelineWorkerDataMessage<T>;

@@ -37,8 +37,8 @@ export interface QuickSortWorkerData {
 }
 
 export function parallelQuickSort<T extends TypedArray>(
-  data: ArrayLike<number | bigint> | T,
-  workers?: number,
-  typedArrayType: TypedArrayConstructor<T>,
-  isAscending?: boolean,
+    data: ArrayLike<number | bigint> | T,
+    typedArrayType: TypedArrayConstructor<T>,
+    workers?: number,
+    isAscending?: boolean,
 ): Promise<T>;

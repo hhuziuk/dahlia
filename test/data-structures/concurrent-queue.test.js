@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const {
   ConcurrentQueue,
-} = require("../../src/data-structures/concurrent-queue");
+} = require("../../src/data-structures/concurrent-queue.js");
 
 describe("ConcurrentQueue", function () {
   let queue;

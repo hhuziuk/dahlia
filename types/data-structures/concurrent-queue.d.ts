@@ -1,3 +1,5 @@
+/// <reference lib="es2017" />
+
 import { RwLock } from "../primitives/rw-lock";
 
 declare class ListNode<T> {
@@ -10,9 +12,9 @@ export declare class ConcurrentQueue<T> {
   private readerBuffer: SharedArrayBuffer;
   private writerBuffer: SharedArrayBuffer;
   private rwLock: RwLock;
-  #length: number;
-  #head: ListNode<T> | null;
-  #tail: ListNode<T> | null;
+  private _length: number;
+  private _head: ListNode<T> | null;
+  private _tail: ListNode<T> | null;
 
   constructor();
 

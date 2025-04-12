@@ -1,4 +1,4 @@
-import { TypedArrayConstructor } from "./parallelQuickSort";
+import { TypedArrayConstructor } from "./parallel-quick-sort";
 
 export const typeConstructors: {
   Int8Array: TypedArrayConstructor<Int8Array>;
