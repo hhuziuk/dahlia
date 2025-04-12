@@ -18,7 +18,7 @@ class Mutex {
     const start = Date.now();
     while (Atomics.compareExchange(this.data, 0, 0, 1) !== 0) {
       const waited = Atomics.wait(this.data, 0, 1, timeout);
-      if (Date.now() - start >= timeout || waited === 'timed-out') {
+      if (Date.now() - start >= timeout || waited === "timed-out") {
         throw new Error("Mutex lock timeout");
       }
     }
