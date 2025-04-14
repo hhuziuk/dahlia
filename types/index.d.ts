@@ -1,5 +1,6 @@
 export { ConcurrentPriorityQueue } from "./data-structures/concurrent-priority-queue";
 export { ConcurrentQueue } from "./data-structures/concurrent-queue";
+export { ConcurrentSet } from "./data-structures/concurrent-set";
 
 export * from "./methods/parallel-pipeline/pipeline";
 export * from "./methods/parallelQuickSort/parallel-quick-sort";

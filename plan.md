@@ -1,26 +1,22 @@
-### Mutexes: 
-* sync mutex ☑️/ ☑️ / ☑️
-* async mutex ☑️/ ☑️ / ☑️
+| Category              | Primitive               | Implementation | Types | Test |
+|-----------------------|-------------------------|-------------|-----|----|
+| **Mutexes**           | sync mutex              | ✅           | ✅   | ✅  |
+|                       | async mutex             | ✅           | ✅   | ✅  |
+| **Semaphores**        | binarySemaphore         | ✅           | ✅   | ✅  |
+|                       | countingSemaphore       | ✅           | ✅   | ✅  |
+| **Locks**             | rwLock                  | ✅           | ✅   | ✅  |
+| **Primitives**        | thread pool             | ✅           | ✅   | ✅  |
+| **Data structures**   | concurrentQueue         | ✅           | ✅   | ✅  |
+|                       | concurrentPriorityQueue | ✅           | ✅   | ✅  |
+|                       | concurrentSet           | ✅           | ✅   | ✅  |
+|                       | concurrentStack         |             |     |    |
+|                       | concurrentDeque         |             |     |    |
+| **Computation Models**| parallelPipeline        | ✅           | ✅   | ✅  |
+|                       | parallelQuickSort       | ✅           | ✅   | ✅  |
 
-### Semaphores: 
-* binarySemaphore ☑️/ ☑️ / ☑️
-* countingSemaphore ☑️/ ☑️ / ☑️
 
-### Locks:
-* rwLock ☑️/ ☑️ / ☑️
 
-### Primitives:
-* thread pool ☑️/ ☑️ / ☑️
 
-### Data structures:
-* concurrentQueue ☑️/ ☑️ / ☑️
-* concurrentPriorityQueue ☑️/ ☑️ / ☑️
-* concurrentMap
-* concurrentSet
-
-### Computation Models:
-* parallelPipeline ☑️/ ☑️ / ☑️
-* parallelQuickSort ☑️/ ☑️ / ☑️
 
 ```js
 ┌─────────┬────────────┬──────────────┬───────────────┬────────────────┬─────────────────┐
@@ -43,3 +39,5 @@
 └─────────┴────────────┴──────────────┴───────────────┴────────────────┴─────────────────┘
 
 ```
+
+
