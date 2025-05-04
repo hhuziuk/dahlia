@@ -1,18 +1,19 @@
-| Category              | Primitive               | Implementation | Types | Test |
-|-----------------------|-------------------------|-------------|-----|----|
-| **Mutexes**           | sync mutex              | ✅           | ✅   | ✅  |
-|                       | async mutex             | ✅           | ✅   | ✅  |
-| **Semaphores**        | binarySemaphore         | ✅           | ✅   | ✅  |
-|                       | countingSemaphore       | ✅           | ✅   | ✅  |
-| **Locks**             | rwLock                  | ✅           | ✅   | ✅  |
-| **Primitives**        | thread pool             | ✅           | ✅   | ✅  |
-| **Data structures**   | concurrentQueue         | ✅           | ✅   | ✅  |
-|                       | concurrentPriorityQueue | ✅           | ✅   | ✅  |
-|                       | concurrentSet           | ✅           | ✅   | ✅  |
-|                       | concurrentStack         |             |     |    |
-|                       | concurrentDeque         |             |     |    |
-| **Computation Models**| parallelPipeline        | ✅           | ✅   | ✅  |
-|                       | parallelQuickSort       | ✅           | ✅   | ✅  |
+| Category               | Primitive               | Implementation | Types | Test |
+|------------------------|-------------------------|------------|----|---|
+| **Mutexes**            | sync mutex              | ✅          | ✅  | ✅ |
+|                        | async mutex             | ✅          | ✅  | ✅ |
+| **Semaphores**         | binarySemaphore         | ✅          | ✅  | ✅ |
+|                        | countingSemaphore       | ✅          | ✅  | ✅ |
+| **Locks**              | rwLock                  | ✅          | ✅  | ✅ |
+| **Primitives**         | thread pool             | ✅          | ✅  | ✅ |
+| **Data structures**    | concurrentQueue         | ✅          | ✅  | ✅ |
+|                        | concurrentPriorityQueue | ✅          | ✅  | ✅ |
+|                        | concurrentSet           | ✅          | ✅  | ✅ |
+|                        | concurrentStack         | ✅          | ✅  |  ✅ |
+|                        | concurrentDeque         | ✅          | ✅  | ✅ |
+| **Computation Models** | parallelPipeline        | ✅          | ✅  | ✅ |
+|                        | parallelQuickSort       | ✅          | ✅  | ✅ |
+| **Task scheduler**     |         |            |    |   |
 
 
 

@@ -28,7 +28,6 @@ class WorkerPool {
     this.workerPool.add(worker);
 
     const clearTask = () => {
-      // Декрементуємо завдання, якщо було прив'язане завдання
       if (worker.currentCallback !== undefined) {
         this.pendingTasks--;
       }
