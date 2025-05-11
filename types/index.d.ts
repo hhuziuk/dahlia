@@ -14,3 +14,5 @@ export { RwLock } from "./primitives/rw-lock";
 export { WorkerPool } from "./primitives/worker-pool";
 export { CountingSemaphore } from "./primitives/counting-semaphore";
 export { BinarySemaphore } from "./primitives/binary-semaphore";
+
+export { Scheduler } from "./task-scheduler/task-scheduler";
