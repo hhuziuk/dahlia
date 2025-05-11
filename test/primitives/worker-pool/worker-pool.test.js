@@ -1,4 +1,3 @@
-const { Worker } = require("node:worker_threads");
 const { expect } = require("chai");
 const path = require("path");
 const { WorkerPool } = require("../../../src/primitives/worker-pool");

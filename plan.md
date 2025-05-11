@@ -13,7 +13,7 @@
 |                        | concurrentDeque         | ✅          | ✅  | ✅ |
 | **Computation Models** | parallelPipeline        | ✅          | ✅  | ✅ |
 |                        | parallelQuickSort       | ✅          | ✅  | ✅ |
-| **Task scheduler**     |         |            |    |   |
+| **Task scheduler**     |         |     ✅      | ✅  | ✅ |
 
 
 
