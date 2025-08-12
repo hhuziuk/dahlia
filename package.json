@@ -1,5 +1,5 @@
 {
-  "name": "dahlia",
+  "name": "dahlia-concurrency",
   "version": "1.0.0",
   "description": "High-level concurrency primitives and patterns for Node.js using worker_threads (queues, semaphore, mutex, worker pool, scheduler, and more)",
   "main": "index.js",
