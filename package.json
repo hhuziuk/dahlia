@@ -1,6 +1,6 @@
 {
   "name": "dahlia-concurrency",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "High-level concurrency primitives and patterns for Node.js using worker_threads (queues, semaphore, mutex, worker pool, scheduler, and more)",
   "main": "index.js",
   "types": "types/index.d.ts",
@@ -11,7 +11,13 @@
       "default": "./index.js"
     }
   },
-  "files": ["index.js", "src/", "types/", "README.md", "LICENSE"],
+  "files": [
+    "index.js",
+    "src/",
+    "types/",
+    "README.md",
+    "LICENSE"
+  ],
   "directories": {
     "test": "test"
   },
