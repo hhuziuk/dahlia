@@ -3,25 +3,25 @@
 import { RwLock } from "../primitives/rw-lock";
 
 export declare class ConcurrentSet<T> {
-    private map: Map<T, true>;
+  private map: Map<T, true>;
 
-    readerBuffer: SharedArrayBuffer;
-    writerBuffer: SharedArrayBuffer;
-    rwLock: RwLock;
+  readerBuffer: SharedArrayBuffer;
+  writerBuffer: SharedArrayBuffer;
+  rwLock: RwLock;
 
-    constructor();
+  constructor();
 
-    add(value: T): this;
+  add(value: T): this;
 
-    clear(): void;
+  clear(): void;
 
-    delete(value: T): boolean;
+  delete(value: T): boolean;
 
-    has(value: T): boolean;
+  has(value: T): boolean;
 
-    get size(): number;
+  get size(): number;
 
-    values(): IterableIterator<T>;
+  values(): IterableIterator<T>;
 
-    [Symbol.iterator](): IterableIterator<T>;
+  [Symbol.iterator](): IterableIterator<T>;
 }

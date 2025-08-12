@@ -3,28 +3,28 @@
 import { RwLock } from "../primitives/rw-lock";
 
 declare class ListNode<T> {
-    element: T;
-    next: ListNode<T> | null;
-    prev: ListNode<T> | null;
-    constructor(element: T);
+  element: T;
+  next: ListNode<T> | null;
+  prev: ListNode<T> | null;
+  constructor(element: T);
 }
 
 export declare class ConcurrentStack<T> {
-    private readerBuffer: SharedArrayBuffer;
-    private writerBuffer: SharedArrayBuffer;
-    private rwLock: RwLock;
-    private _length: number;
-    private _head: ListNode<T> | null;
+  private readerBuffer: SharedArrayBuffer;
+  private writerBuffer: SharedArrayBuffer;
+  private rwLock: RwLock;
+  private _length: number;
+  private _head: ListNode<T> | null;
 
-    constructor();
+  constructor();
 
-    push(item: T): void;
+  push(item: T): void;
 
-    pop(): T | null;
+  pop(): T | null;
 
-    peek(): T | null;
+  peek(): T | null;
 
-    readonly size: number;
+  readonly size: number;
 
-    isEmpty(): boolean;
+  isEmpty(): boolean;
 }

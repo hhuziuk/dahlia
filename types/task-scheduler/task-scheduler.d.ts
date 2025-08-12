@@ -1,27 +1,31 @@
-import { WorkerPool } from '../primitives/worker-pool.js';
+import { WorkerPool } from "../primitives/worker-pool.js";
 
 export interface TaskPayload {
-    [key: string]: any;
+  [key: string]: any;
 }
 
 export interface WorkerTaskPayload {
-    id: number;
-    type: string;
-    payload: TaskPayload;
+  id: number;
+  type: string;
+  payload: TaskPayload;
 }
 
 export class Scheduler {
-    private workerPool: WorkerPool<{ modulePath: string }, WorkerTaskPayload, any>;
-    private taskId: number;
+  private workerPool: WorkerPool<
+    { modulePath: string },
+    WorkerTaskPayload,
+    any
+  >;
+  private taskId: number;
 
-    constructor(numWorkers: number, modulePath: string);
+  constructor(numWorkers: number, modulePath: string);
 
-    start(): void;
+  start(): void;
 
-    runTask<TPayload extends TaskPayload = any, TResult = any>(
-        name: string,
-        payload: TPayload
-    ): Promise<TResult>;
+  runTask<TPayload extends TaskPayload = any, TResult = any>(
+    name: string,
+    payload: TPayload,
+  ): Promise<TResult>;
 
-    stop(): Promise<void>;
+  stop(): Promise<void>;
 }

@@ -5,28 +5,28 @@ import { RwLock } from "../primitives/rw-lock";
 export type Strategy = "max" | "min";
 
 declare class ListNode<T> {
-    element: T;
-    next: ListNode<T> | null;
-    constructor(element: T);
+  element: T;
+  next: ListNode<T> | null;
+  constructor(element: T);
 }
 
 export class ConcurrentPriorityQueue<T> {
-    readonly readerBuffer: SharedArrayBuffer;
-    readonly writerBuffer: SharedArrayBuffer;
+  readonly readerBuffer: SharedArrayBuffer;
+  readonly writerBuffer: SharedArrayBuffer;
 
-    readonly rwLock: RwLock;
+  readonly rwLock: RwLock;
 
-    readonly strategy: Strategy;
+  readonly strategy: Strategy;
 
-    constructor(strategy?: Strategy);
+  constructor(strategy?: Strategy);
 
-    enqueue(item: T, priority: number): void;
+  enqueue(item: T, priority: number): void;
 
-    dequeue(): T | null;
+  dequeue(): T | null;
 
-    peek(): T | null;
+  peek(): T | null;
 
-    isEmpty(): boolean;
+  isEmpty(): boolean;
 
-    get size(): number;
+  get size(): number;
 }

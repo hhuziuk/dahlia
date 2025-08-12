@@ -3,35 +3,35 @@
 import { RwLock } from "../primitives/rw-lock";
 
 declare class ListNode<T> {
-    element: T;
-    next: ListNode<T> | null;
-    prev: ListNode<T> | null;
-    constructor(element: T);
+  element: T;
+  next: ListNode<T> | null;
+  prev: ListNode<T> | null;
+  constructor(element: T);
 }
 
 export declare class ConcurrentDeque<T> {
-    private readerBuffer: SharedArrayBuffer;
-    private writerBuffer: SharedArrayBuffer;
-    private rwLock: RwLock;
-    private _length: number;
-    private _head: ListNode<T> | null;
-    private _tail: ListNode<T> | null;
+  private readerBuffer: SharedArrayBuffer;
+  private writerBuffer: SharedArrayBuffer;
+  private rwLock: RwLock;
+  private _length: number;
+  private _head: ListNode<T> | null;
+  private _tail: ListNode<T> | null;
 
-    constructor();
+  constructor();
 
-    enqueueFront(item: T): void;
+  enqueueFront(item: T): void;
 
-    enqueueBack(item: T): void;
+  enqueueBack(item: T): void;
 
-    dequeueFront(): T | null;
+  dequeueFront(): T | null;
 
-    dequeueBack(): T | null;
+  dequeueBack(): T | null;
 
-    peekFront(): T | null;
+  peekFront(): T | null;
 
-    peekBack(): T | null;
+  peekBack(): T | null;
 
-    readonly size: number;
+  readonly size: number;
 
-    isEmpty(): boolean;
+  isEmpty(): boolean;
 }

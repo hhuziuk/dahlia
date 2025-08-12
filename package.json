@@ -1,9 +1,17 @@
 {
   "name": "dahlia",
   "version": "1.0.0",
-  "description": "",
+  "description": "High-level concurrency primitives and patterns for Node.js using worker_threads (queues, semaphore, mutex, worker pool, scheduler, and more)",
   "main": "index.js",
   "types": "types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "require": "./index.js",
+      "default": "./index.js"
+    }
+  },
+  "files": ["index.js", "src/", "types/", "README.md", "LICENSE"],
   "directories": {
     "test": "test"
   },
@@ -11,8 +19,37 @@
     "test": "mocha --recursive --reporter spec \"test/**/*.test.js\" --exit",
     "lint": "npx biome format . --write"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "concurrency",
+    "parallel",
+    "worker-threads",
+    "worker",
+    "worker-pool",
+    "queue",
+    "priority-queue",
+    "semaphore",
+    "mutex",
+    "lock",
+    "scheduler",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Heorhii Huziuk <huziukwork@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hhuziuk/dahlia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hhuziuk/dahlia/issues"
+  },
+  "homepage": "https://github.com/hhuziuk/dahlia#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "mocha": "^11.1.0",
